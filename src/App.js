@@ -1,25 +1,35 @@
-import logo from './logo.svg';
-import './App.css';
+import React,{useState , useEffect} from "react";
+import dataScript from "./component/ScriptureDB";
+import Scripture from "./component/Scripture";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+
+const App = () =>  {
+
+const [date , setDate] = useState(new Date().toDateString());
+const [render , setRender] = useState({})
+
+const getListOfScripture = () => {
+  let mapped = dataScript.map((item, id) => {
+    if (date === item.date) {
+      setRender(item);
+    }
+  })
+
+  return mapped;
+}
+
+useEffect(() => {
+  getListOfScripture();
+},[])
+
+
+
+
+  return(
+    <div>
+      <Scripture render={render} /> 
     </div>
-  );
+    );
 }
 
 export default App;
